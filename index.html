@@ -387,13 +387,13 @@
         <div class="floating-badge">⭐ TOP PICK<br>THIS WEEK</div>
         <div class="hero-car-img">🚗</div>
         <div class="hero-car-info">
-          <div style="font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">Honda</div>
-          <h3>City ZX 2022</h3>
-          <div class="price">₹8,75,000</div>
+          <div style="font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">Maruti Suzuki</div>
+          <h3>XL6 Zeta 2020</h3>
+          <div class="price">₹7,25,000</div>
           <div class="hero-car-tags">
-            <span class="tag">📍 28,000 km</span>
+            <span class="tag">🔑 Push Start</span>
             <span class="tag">⛽ Petrol</span>
-            <span class="tag">🔧 Auto</span>
+            <span class="tag">👥 6 Seater</span>
           </div>
         </div>
       </div>
@@ -471,12 +471,9 @@
             <option value="">All Brands</option>
             <option>Maruti Suzuki</option>
             <option>Hyundai</option>
-            <option>Honda</option>
-            <option>Toyota</option>
             <option>Tata</option>
             <option>Mahindra</option>
-            <option>Kia</option>
-            <option>MG</option>
+            <option>Ford</option>
           </select>
         </div>
         <div class="filter-group">
@@ -485,8 +482,7 @@
             <option value="">All Types</option>
             <option>Petrol</option>
             <option>Diesel</option>
-            <option>CNG</option>
-            <option>Electric</option>
+            <option>Petrol + CNG</option>
           </select>
         </div>
         <div class="filter-group">
@@ -741,10 +737,9 @@
         <ul class="footer-links">
           <li><a href="#">Maruti Suzuki</a></li>
           <li><a href="#">Hyundai</a></li>
-          <li><a href="#">Honda</a></li>
-          <li><a href="#">Toyota</a></li>
           <li><a href="#">Tata Motors</a></li>
           <li><a href="#">Mahindra</a></li>
+          <li><a href="#">Ford</a></li>
         </ul>
       </div>
     </div>
@@ -779,18 +774,111 @@
 <script>
 // ─── CAR DATA ────────────────────────────────────────────────────────────────
 const cars = [
-  { id:1, brand:'Maruti Suzuki', name:'Swift Dzire VXI', year:2022, km:28000, fuel:'Petrol', trans:'Manual', price:620000, color:'Pearl White', seats:5, engine:'1.2L K-Series', power:'89 bhp', emoji:'🚗', badge:'featured', highlights:['Single Owner','Full Service History','Reverse Camera','Alloy Wheels','ABS + EBD'], desc:'A beautifully maintained Dzire in Pearl White. Single owner from new, all service done at Maruti ASC. Comes with all original accessories and spare keys.', image:'🚗' },
-  { id:2, brand:'Hyundai', name:'Creta SX 1.5', year:2021, km:42000, fuel:'Diesel', trans:'Manual', price:1050000, color:'Phantom Black', seats:5, engine:'1.5L CRDi', power:'113 bhp', emoji:'🚙', badge:'', highlights:['Sunroof','Ventilated Seats','BlueLink Connected Car','360° Camera','8 Airbags'], desc:'Top-spec Creta SX with sunroof and ventilated seats. Diesel engine makes it very economical. All features working perfectly. Accident-free history.', image:'🚙' },
-  { id:3, brand:'Honda', name:'City ZX CVT', year:2022, km:19000, fuel:'Petrol', trans:'Automatic', price:1090000, color:'Radiant Red Metallic', seats:5, engine:'1.5L i-VTEC', power:'119 bhp', emoji:'🏎️', badge:'featured', highlights:['Honda Sensing Suite','Lane Watch','Wireless CarPlay','Electric Sunroof','LED Headlamps'], desc:'Top-of-the-line Honda City with CVT transmission. Features Honda Sensing safety suite. Low mileage, single owner, maintained at Honda ASC throughout.', image:'🏎️' },
-  { id:4, brand:'Tata', name:'Nexon EV Prime', year:2023, km:12000, fuel:'Electric', trans:'Automatic', price:1580000, color:'Calgary White', seats:5, engine:'129.2 Ah Battery', power:'143 bhp', emoji:'⚡', badge:'new', highlights:['Range 312 km','Fast Charging','Connected Car Tech','Panoramic Sunroof','ADAS Safety'], desc:'Almost new Nexon EV Prime with just 12,000 km. Perfect for city driving with 312 km range. All charging accessories included. Under manufacturer warranty.', image:'⚡' },
-  { id:5, brand:'Maruti Suzuki', name:'Brezza ZXI+ Auto', year:2023, km:8500, fuel:'Petrol', trans:'Automatic', price:1180000, color:'Splendid Silver', seats:5, engine:'1.5L K15C Hybrid', power:'101 bhp', emoji:'🚗', badge:'new', highlights:['Smart Hybrid Technology','HUD Display','360° Camera','Wireless Charging','Heads-Up Display'], desc:'Brand new condition Brezza with smart hybrid system. Loaded with all top features. Company warranty valid till 2026. Fantastic fuel efficiency.', image:'🚗' },
-  { id:6, brand:'Mahindra', name:'Scorpio N Z8L', year:2023, km:22000, fuel:'Diesel', trans:'Automatic', price:1890000, color:'Deep Forest Green', seats:7, engine:'2.2L mHawk', power:'172 bhp', emoji:'🚐', badge:'', highlights:['4WD Capable','7 Seater','Level 2 ADAS','Sony Sound System','Air Purifier'], desc:'The king of SUVs in flagship Z8L variant. 7 seater with 4WD capability. Powerful mHawk diesel engine. Perfect for highway and off-road adventures.', image:'🚐' },
-  { id:7, brand:'Kia', name:'Seltos HTX Plus', year:2021, km:38000, fuel:'Petrol', trans:'Manual', price:960000, color:'Glacier White Pearl', seats:5, engine:'1.5L MPi', power:'113 bhp', emoji:'🚘', badge:'', highlights:['10.25" Touchscreen','Bose Sound System','Ventilated Seats','Wireless CarPlay','Smart Key'], desc:'Well maintained Seltos HTX+ with all features intact. Bose sound system and ventilated seats are highlights. Full service history available.', image:'🚘' },
-  { id:8, brand:'Toyota', name:'Innova Crysta GX', year:2020, km:58000, fuel:'Diesel', trans:'Manual', price:1350000, color:'Super White', seats:7, engine:'2.4L GD Series', power:'148 bhp', emoji:'🚌', badge:'', highlights:['7 Seater','Captain Seats','MID Display','360° Camera','Cruise Control'], desc:'The unbeatable Innova Crysta. Known for reliability and comfort. Regularly serviced at Toyota ASC. Ideal for families and long road trips.', image:'🚌' },
-  { id:9, brand:'Hyundai', name:'i20 Asta 1.0T', year:2022, km:24000, fuel:'Petrol', trans:'Automatic', price:835000, color:'Fiery Red', seats:5, engine:'1.0L Turbo GDi', power:'118 bhp', emoji:'🏎️', badge:'', highlights:['Turbo Engine','Bose Sound','Digital Cluster','Panoramic Sunroof','BlueLink App'], desc:'The sporty i20 in top Asta trim with turbocharged engine. Panoramic sunroof and Bose sound system. Fun to drive with punchy performance.', image:'🏎️' },
-  { id:10, brand:'MG', name:'Hector Sharp 2.0T', year:2021, km:45000, fuel:'Diesel', trans:'Manual', price:1290000, color:'Starry Black', seats:5, engine:'2.0L Turbocharged', power:'168 bhp', emoji:'🚗', badge:'', highlights:['14" Touchscreen','ADAS Safety','i-SMART Technology','Panoramic Sunroof','Electric Tailgate'], desc:'Internet SUV with massive 14-inch touchscreen. Loaded with ADAS safety features. Powerful 2.0L diesel engine perfect for long drives.', image:'🚗' },
-  { id:11, brand:'Maruti Suzuki', name:'Wagon R VXI CNG', year:2023, km:15000, fuel:'CNG', trans:'Manual', price:580000, color:'Silky Silver', seats:5, engine:'1.0L K10C', power:'67 bhp', emoji:'🚗', badge:'new', highlights:['Factory CNG','High Fuel Economy','Airbags','Rear Parking Sensors','Keyless Entry'], desc:'Factory-fitted CNG makes it ultra-economical for daily city commute. Almost new condition with just 15,000 km. Perfect for Uber/Ola or personal use.', image:'🚗' },
-  { id:12, brand:'Tata', name:'Harrier XZ Plus', year:2022, km:31000, fuel:'Diesel', trans:'Automatic', price:1720000, color:'Orcus White', seats:5, engine:'2.0L Kryotec', power:'168 bhp', emoji:'🚙', badge:'', highlights:['Panoramic Sunroof','JBL Sound','ADAS Safety','Air Purifier','Terrain Response Modes'], desc:'Premium SUV with imposing road presence. Panoramic sunroof and JBL premium sound system. ADAS safety features and terrain response modes.', image:'🚙' },
+  {
+    id:1, brand:'Maruti Suzuki', name:'Wagon R VXI (CNG)', year:2022, km:72000,
+    fuel:'Petrol + CNG', trans:'Manual', price:465000, color:'Not Specified', seats:5,
+    engine:'1.0L K-Series', power:'67 bhp', emoji:'🚗', badge:'featured',
+    highlights:['Company Fitted CNG','30-34 km/kg Mileage','Diamond-Cut Alloy Wheels','Neat & Clean Interior','ABS + EBD'],
+    desc:'Well maintained Wagon R VXI with company-fitted CNG. Delivers an impressive 30-34 km/kg mileage on CNG. Features aftermarket diamond-cut alloy wheels and a very neat, well-kept interior. Great choice for daily city commute with low running cost.'
+  },
+  {
+    id:2, brand:'Maruti Suzuki', name:'S-Presso VXI', year:2022, km:52000,
+    fuel:'Petrol', trans:'Manual', price:355000, color:'White', seats:5,
+    engine:'1.0L K10C', power:'67 bhp', emoji:'🚗', badge:'',
+    highlights:['First Owner','Varanasi Local Number (UP-65-4314)','14-inch Wheels','Excellent Ground Clearance','Clean Condition'],
+    desc:'First owner S-Presso VXI in white color with Varanasi local registration (UP-65-4314). Features 14-inch wheels and excellent ground clearance. Very clean and well-maintained condition throughout.'
+  },
+  {
+    id:3, brand:'Tata', name:'Zest XM', year:2018, km:0,
+    fuel:'Diesel', trans:'Manual', price:165000, color:'Not Specified', seats:5,
+    engine:'1.3L Quadrajet', power:'89 bhp', emoji:'🚙', badge:'',
+    highlights:['22 kmpl Mileage','90% Tyre Life Remaining','Fully Functional AC','Diesel Economy','Spacious Boot'],
+    desc:'Dec 2018 Tata Zest XM diesel with claimed mileage of 22 kmpl. 90% tyre life remaining — barely used tyres. Fully functional AC. Excellent diesel economy makes it a great value pick. Call us to confirm final price.'
+  },
+  {
+    id:4, brand:'Maruti Suzuki', name:'Wagon R (CNG)', year:2015, km:51000,
+    fuel:'Petrol + CNG', trans:'Manual', price:265000, color:'Not Specified', seats:5,
+    engine:'1.0L K-Series', power:'67 bhp', emoji:'🚗', badge:'',
+    highlights:['Second Owner','Aftermarket CNG Fitted','26-27 km/kg on CNG','UP-72 Registration','Low Running Cost'],
+    desc:'2015 Wagon R with aftermarket CNG fitment. Second owner with UP-72 registration. Expected mileage of 26-27 km/kg on CNG, making it extremely economical for daily use and ride-hailing.'
+  },
+  {
+    id:5, brand:'Ford', name:'Fiesta Classic', year:2010, km:72000,
+    fuel:'Diesel', trans:'Manual', price:195000, color:'Not Specified', seats:5,
+    engine:'1.4L TDCi', power:'68 bhp', emoji:'🚘', badge:'',
+    highlights:['First Owner','UP-65 Registration','Alloy Wheels','Electric Tailgate','Large Boot Space'],
+    desc:'First owner Ford Fiesta Classic diesel with UP-65 registration. Features alloy wheels, electric tailgate, and a large boot space — rare features for this segment. Well maintained and solid build quality.'
+  },
+  {
+    id:6, brand:'Maruti Suzuki', name:'Alto K10 VXI', year:2012, km:0,
+    fuel:'Petrol', trans:'Manual', price:165000, color:'Not Specified', seats:5,
+    engine:'1.0L K10B', power:'67 bhp', emoji:'🚗', badge:'',
+    highlights:['First Owner','1000cc Engine','Brand New Tyres','Excellent AC','Low Maintenance'],
+    desc:'Oct 2012 Alto K10 VXI with first owner history. Equipped with a reliable 1000cc engine, brand new tyres, and excellent working AC. Perfect entry-level car for first-time buyers or for city use.'
+  },
+  {
+    id:7, brand:'Maruti Suzuki', name:'Baleno', year:2019, km:51000,
+    fuel:'Petrol', trans:'Manual', price:465000, color:'Not Specified', seats:5,
+    engine:'1.2L Dualjet', power:'90 bhp', emoji:'🚗', badge:'featured',
+    highlights:['First Owner','Premium Hatchback','Touchscreen Infotainment','ABS + EBD','Stylish Design'],
+    desc:'First owner 2019 Baleno petrol with 51,000 km. One of the most popular premium hatchbacks in India. Smooth engine, great fuel economy, and stylish interiors. Well maintained throughout.'
+  },
+  {
+    id:8, brand:'Mahindra', name:'Bolero', year:2014, km:99000,
+    fuel:'Diesel', trans:'Manual', price:380000, color:'Not Specified', seats:7,
+    engine:'2.5L mHawk', power:'63 bhp', emoji:'🚐', badge:'',
+    highlights:['7 Seater','80-90% Tyre Tread Left','Rugged Build','High Ground Clearance','Diesel Economy'],
+    desc:'2014 Mahindra Bolero diesel 7-seater with 80-90% tyre life remaining. The most trusted workhorse for families and rough terrain. Rugged build, high ground clearance, and reliable diesel engine. Great value for the price.'
+  },
+  {
+    id:9, brand:'Maruti Suzuki', name:'Celerio VXI (CNG)', year:2023, km:77000,
+    fuel:'Petrol + CNG', trans:'Manual', price:415000, color:'Not Specified', seats:5,
+    engine:'1.0L K10C', power:'67 bhp', emoji:'🚗', badge:'new',
+    highlights:['First Owner','Company Fitted CNG','Original Sealed Condition','New Car Feel & Smell','Promotional Price'],
+    desc:'First owner 2023 Celerio VXI with company-fitted CNG at a discounted promotional price. Retains its original sealed condition and even the new car smell. Excellent fuel economy on CNG. One of the best value buys in stock right now.'
+  },
+  {
+    id:10, brand:'Tata', name:'Zest XM', year:2017, km:65000,
+    fuel:'Diesel', trans:'Manual', price:250000, color:'Not Specified', seats:5,
+    engine:'1.3L Quadrajet', power:'89 bhp', emoji:'🚙', badge:'',
+    highlights:['Second Owner','22-25 kmpl Mileage','Spacious Cabin','Discounted from ₹2.65L','Diesel Economy'],
+    desc:'2017 Tata Zest XM diesel, second owner, delivering 22-25 kmpl mileage. Price reduced from ₹2.65 Lakh as a promotional offer. Spacious cabin, reliable diesel engine, and great running cost. Smart budget sedan pick.'
+  },
+  {
+    id:11, brand:'Maruti Suzuki', name:'XL6 Zeta', year:2020, km:0,
+    fuel:'Petrol', trans:'Manual', price:725000, color:'Magma Grey', seats:6,
+    engine:'1.5L K15B', power:'103 bhp', emoji:'🚐', badge:'featured',
+    highlights:['UP-60 Registration','Push-Button Start','Cruise Control','All-LED Headlamps','15" Company Alloys','6-Seater Captain Seats'],
+    desc:'Premium 2020 Maruti XL6 Zeta in Magma Grey, registered directly in dealership firm name (UP-60). Loaded with push-button start, cruise control, all-LED headlamps, 15-inch company alloy wheels, and 6-seater captain seats. A rare find at this price.'
+  },
+  {
+    id:12, brand:'Hyundai', name:'i20 Sportz', year:2017, km:37000,
+    fuel:'Petrol', trans:'Manual', price:399000, color:'Not Specified', seats:5,
+    engine:'1.2L Kappa2', power:'82 bhp', emoji:'🏎️', badge:'',
+    highlights:['Official Service Record','Roof Rails','Diamond-Cut Alloy Wheels','Chrome Door Handles','Silent Engine','Sonbhadra Registration'],
+    desc:'Nov 2017 Hyundai i20 Sportz petrol with official service record and just 37,000 km driven. Top model featuring roof rails, diamond-cut alloys, and chrome door handles. Engine is remarkably silent and smooth. Sonbhadra registration.'
+  },
+  {
+    id:13, brand:'Tata', name:'Nexon', year:2018, km:79000,
+    fuel:'Diesel', trans:'Manual', price:450000, color:'Not Specified', seats:5,
+    engine:'1.5L Revotorq', power:'108 bhp', emoji:'🚙', badge:'',
+    highlights:['Mirzapur (AD) Registration','5-Star Safety Rating','Turbocharged Diesel','ABS + EBD','Stylish SUV Design'],
+    desc:'2018 Tata Nexon diesel with Mirzapur (AD) registration and 79,000 km. India\'s first 5-star safety rated SUV. Turbocharged diesel engine delivers punchy performance and good mileage. Great SUV value at this price point.'
+  },
+  {
+    id:14, brand:'Hyundai', name:'Eon Magna Plus', year:2018, km:82000,
+    fuel:'Petrol', trans:'Manual', price:235000, color:'Not Specified', seats:5,
+    engine:'0.8L Epsilon', power:'55 bhp', emoji:'🚗', badge:'',
+    highlights:['Varanasi Local Registration','Low Maintenance','Fuel Efficient','Easy to Park','Ideal City Car'],
+    desc:'2018 Hyundai Eon Magna Plus with Varanasi local registration. The perfect compact city car — easy to park, fuel efficient, and extremely low maintenance cost. Ideal for first-time buyers or as a second family car.'
+  },
+  {
+    id:15, brand:'Maruti Suzuki', name:'Dzire', year:2020, km:46000,
+    fuel:'Petrol', trans:'Manual', price:500000, color:'Not Specified', seats:5,
+    engine:'1.2L Dualjet', power:'89 bhp', emoji:'🚗', badge:'featured',
+    highlights:['First Owner','April 2020','46,000 km','Booked — May Be Available','Call to Confirm Availability'],
+    desc:'April 2020 Maruti Dzire petrol, first owner with 46,000 km. This car was actively booked at ₹5 Lakh but may become available if the buyer\'s financing doesn\'t come through. Call us immediately to express interest — don\'t miss it!'
+  },
 ];
 
 let filteredCars = [...cars];
