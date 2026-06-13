@@ -363,6 +363,7 @@
     .emi-inner { grid-template-columns: 1fr; }
     .contact-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
+    .deliveries-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
   }
   @media (max-width: 700px) {
     .nav-links, .nav-cta { display: none; }
@@ -374,13 +375,14 @@
     .modal-header { flex-direction: column; }
     .modal-price-group { text-align: left; }
     .modal-body { padding: 0 1rem 1.5rem; }
+    .deliveries-grid { grid-template-columns: 1fr; gap: 0.9rem; }
   }
 
   /* DELIVERY GALLERY */
   .deliveries-section { padding: 3rem 4%; }
   .deliveries-inner { max-width: 1300px; margin: 0 auto; }
   .deliveries-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-  .deliveries-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .deliveries-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
   .delivery-card { background: var(--dark3); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; overflow: hidden; position: relative; padding: 0.5rem; display: flex; align-items: center; justify-content: center; height: 160px; }
   .delivery-card img { width: 100%; height: 100%; object-fit: cover; object-position: center; border-radius: 8px; }
   .delivery-upload { display: flex; gap: 0.5rem; align-items: center; }
