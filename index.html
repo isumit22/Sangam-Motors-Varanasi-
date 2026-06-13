@@ -137,6 +137,8 @@
   .filter-group select:focus, .filter-group input:focus { outline: none; border-color: var(--gold); }
   .filter-btn { background: var(--gold); color: var(--dark); border: none; padding: 0.68rem 1.5rem; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.88rem; cursor: pointer; width: 100%; transition: all 0.2s; }
   .filter-btn:hover { background: var(--gold-light); }
+  .filter-btn.alt { background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.12); }
+  .filter-btn.alt:hover { color: var(--text); border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.06); }
   .results-count { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem; }
   .results-count strong { color: var(--text); }
 
@@ -273,6 +275,8 @@
   .form-field.full { grid-column: 1 / -1; }
   .form-submit { width: 100%; background: var(--gold); color: var(--dark); border: none; padding: 0.9rem; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.25s; margin-top: 0.5rem; }
   .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .form-error { display: none; background: rgba(192,57,43,0.12); border: 1px solid rgba(192,57,43,0.5); color: #f4c4be; padding: 0.7rem 0.9rem; border-radius: var(--radius-sm); margin-top: 0.75rem; font-size: 0.86rem; }
+  .form-error.show { display: block; }
   .toast { display: none; background: #2ecc71; color: #fff; padding: 0.75rem 1.25rem; border-radius: var(--radius-sm); margin-top: 0.75rem; font-size: 0.9rem; text-align: center; }
   .toast.show { display: block; animation: fadeIn 0.3s; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
@@ -359,7 +363,7 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="tel:08840209617" class="nav-cta" id="navCta">📞 Call Now</a>
-  <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
+  <div class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Toggle navigation" aria-expanded="false">
     <span></span><span></span><span></span>
   </div>
 </nav>
@@ -387,13 +391,13 @@
         <div class="floating-badge">⭐ TOP PICK<br>THIS WEEK</div>
         <div class="hero-car-img">🚗</div>
         <div class="hero-car-info">
-          <div style="font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">Maruti Suzuki</div>
-          <h3>XL6 Zeta 2020</h3>
-          <div class="price">₹7,25,000</div>
+          <div style="font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">Hyundai</div>
+          <h3>Grand i10 Nios Sportz 2021</h3>
+          <div class="price">₹4,85,000</div>
           <div class="hero-car-tags">
-            <span class="tag">🔑 Push Start</span>
-            <span class="tag">⛽ Petrol</span>
-            <span class="tag">👥 6 Seater</span>
+            <span class="tag">👤 1st Owner</span>
+            <span class="tag">⛽ Petrol + CNG</span>
+            <span class="tag">✅ Very Well Maintained</span>
           </div>
         </div>
       </div>
@@ -440,7 +444,7 @@
       <div class="contact-icon">🕐</div>
       <div>
         <div class="contact-label">Working Hours</div>
-        <div class="contact-value">Mon–Sat: 9 AM – 7 PM &nbsp; <span class="hours-badge">● Open Now</span></div>
+        <div class="contact-value">Mon–Sat: 9 AM – 7 PM &nbsp; <span class="hours-badge" id="hoursBadge">● Open Now</span></div>
       </div>
     </div>
     <div class="contact-item">
@@ -518,12 +522,15 @@
         <div class="filter-group">
           <button class="filter-btn" onclick="applyFilters()">🔍 Search Cars</button>
         </div>
+        <div class="filter-group">
+          <button class="filter-btn alt" onclick="resetFilters()">Reset Filters</button>
+        </div>
       </div>
     </div>
 
     <!-- SORT + RESULTS -->
     <div class="sort-bar">
-      <div class="results-count"><strong id="resultsNum">12</strong> cars found</div>
+      <div class="results-count"><strong id="resultsNum">8</strong> cars found</div>
       <div class="sort-options">
         <button class="sort-btn active" onclick="sortCars('newest',this)">Newest First</button>
         <button class="sort-btn" onclick="sortCars('price-low',this)">Price: Low to High</button>
@@ -674,8 +681,8 @@
       <div class="contact-form">
         <h3>📋 Send an Enquiry</h3>
         <div class="form-grid">
-          <div class="form-field"><label>Your Name *</label><input type="text" placeholder="Rajesh Kumar" id="formName"></div>
-          <div class="form-field"><label>Phone Number *</label><input type="tel" placeholder="088402 09617" id="formPhone"></div>
+          <div class="form-field"><label>Your Name *</label><input type="text" placeholder="Rajesh Kumar" id="formName" autocomplete="name" required></div>
+          <div class="form-field"><label>Phone Number *</label><input type="tel" placeholder="088402 09617" id="formPhone" autocomplete="tel" required></div>
           <div class="form-field"><label>Email Address</label><input type="email" placeholder="you@email.com" id="formEmail"></div>
           <div class="form-field"><label>Interested In</label>
             <select id="formInterest">
@@ -689,7 +696,9 @@
           </div>
           <div class="form-field full"><label>Preferred Car / Message</label><textarea rows="4" placeholder="Tell us what you're looking for..." id="formMessage"></textarea></div>
         </div>
+        <div style="font-size:0.8rem;color:var(--text-dim);margin-top:0.2rem;">By submitting, you agree to be contacted via phone/WhatsApp regarding your enquiry.</div>
         <button class="form-submit" onclick="submitForm()">✉️ Send Enquiry</button>
+        <div class="form-error" id="formError">Please enter a valid name and 10-digit phone number.</div>
         <div class="toast" id="formToast">✅ Thank you! We'll contact you within 2 hours.</div>
       </div>
     </div>
@@ -775,109 +784,60 @@
 // ─── CAR DATA ────────────────────────────────────────────────────────────────
 const cars = [
   {
-    id:1, brand:'Maruti Suzuki', name:'Wagon R VXI (CNG)', year:2022, km:72000,
-    fuel:'Petrol + CNG', trans:'Manual', price:465000, color:'Not Specified', seats:5,
-    engine:'1.0L K-Series', power:'67 bhp', emoji:'🚗', badge:'featured',
-    highlights:['Company Fitted CNG','30-34 km/kg Mileage','Diamond-Cut Alloy Wheels','Neat & Clean Interior','ABS + EBD'],
-    desc:'Well maintained Wagon R VXI with company-fitted CNG. Delivers an impressive 30-34 km/kg mileage on CNG. Features aftermarket diamond-cut alloy wheels and a very neat, well-kept interior. Great choice for daily city commute with low running cost.'
+    id: 1, brand: 'Maruti Suzuki', name: 'WagonR VXi', year: 2022, km: 45000,
+    fuel: 'Petrol', trans: 'Manual', price: 440000, color: 'Not Specified', seats: 5,
+    engine: '1.0L K-Series', power: '67 bhp', emoji: '🚗', badge: '',
+    highlights: ['1st Owner', 'Top Variant', 'Showroom Condition', 'Start/Stop', 'Voice Command Control'],
+    desc: '2022 Maruti Suzuki WagonR VXi (Top Variant), first owner, petrol, 45,000 km driven. Maintained in showroom condition with start/stop and voice command control features.'
   },
   {
-    id:2, brand:'Maruti Suzuki', name:'S-Presso VXI', year:2022, km:52000,
-    fuel:'Petrol', trans:'Manual', price:355000, color:'White', seats:5,
-    engine:'1.0L K10C', power:'67 bhp', emoji:'🚗', badge:'',
-    highlights:['First Owner','Varanasi Local Number (UP-65-4314)','14-inch Wheels','Excellent Ground Clearance','Clean Condition'],
-    desc:'First owner S-Presso VXI in white color with Varanasi local registration (UP-65-4314). Features 14-inch wheels and excellent ground clearance. Very clean and well-maintained condition throughout.'
+    id: 2, brand: 'Maruti Suzuki', name: 'Dzire VDi', year: 2019, km: 67000,
+    fuel: 'Diesel', trans: 'Manual', price: 535000, color: 'Not Specified', seats: 5,
+    engine: '1.3L DDiS', power: '75 bhp', emoji: '🚗', badge: '',
+    highlights: ['1st Owner', 'Diesel', 'Excellent Condition', 'Well Maintained', 'Great Sedan Value'],
+    desc: '2019 Maruti Suzuki Dzire VDi, first owner, diesel, 67,000 km driven. Kept in excellent condition and priced at Rs 5,35,000.'
   },
   {
-    id:3, brand:'Tata', name:'Zest XM', year:2018, km:0,
-    fuel:'Diesel', trans:'Manual', price:165000, color:'Not Specified', seats:5,
-    engine:'1.3L Quadrajet', power:'89 bhp', emoji:'🚙', badge:'',
-    highlights:['22 kmpl Mileage','90% Tyre Life Remaining','Fully Functional AC','Diesel Economy','Spacious Boot'],
-    desc:'Dec 2018 Tata Zest XM diesel with claimed mileage of 22 kmpl. 90% tyre life remaining — barely used tyres. Fully functional AC. Excellent diesel economy makes it a great value pick. Call us to confirm final price.'
+    id: 3, brand: 'Maruti Suzuki', name: 'WagonR VXi', year: 2023, km: 62000,
+    fuel: 'Petrol + CNG', trans: 'Manual', price: 485000, color: 'Not Specified', seats: 5,
+    engine: '1.0L K-Series', power: '67 bhp', emoji: '🚗', badge: '',
+    highlights: ['Oct 2023 Model', '1st Owner', 'Petrol + CNG', 'Excellent Condition', 'Low Running Cost'],
+    desc: 'Oct 2023 Maruti Suzuki WagonR VXi, first owner, petrol + CNG, 62,000 km driven. Excellent condition with strong fuel economy.'
   },
   {
-    id:4, brand:'Maruti Suzuki', name:'Wagon R (CNG)', year:2015, km:51000,
-    fuel:'Petrol + CNG', trans:'Manual', price:265000, color:'Not Specified', seats:5,
-    engine:'1.0L K-Series', power:'67 bhp', emoji:'🚗', badge:'',
-    highlights:['Second Owner','Aftermarket CNG Fitted','26-27 km/kg on CNG','UP-72 Registration','Low Running Cost'],
-    desc:'2015 Wagon R with aftermarket CNG fitment. Second owner with UP-72 registration. Expected mileage of 26-27 km/kg on CNG, making it extremely economical for daily use and ride-hailing.'
+    id: 4, brand: 'Maruti Suzuki', name: 'WagonR VXi', year: 2021, km: 52000,
+    fuel: 'Petrol', trans: 'Manual', price: 435000, color: 'Not Specified', seats: 5,
+    engine: '1.0L K-Series', power: '67 bhp', emoji: '🚗', badge: '',
+    highlights: ['1st Owner', 'Top Model', 'Showroom Condition', 'Tyres 90%', 'Petrol'],
+    desc: '2021 Maruti Suzuki WagonR VXi (Top Model), first owner, petrol, 52,000 km driven. Showroom condition with 90% tyre life remaining.'
   },
   {
-    id:5, brand:'Ford', name:'Fiesta Classic', year:2010, km:72000,
-    fuel:'Diesel', trans:'Manual', price:195000, color:'Not Specified', seats:5,
-    engine:'1.4L TDCi', power:'68 bhp', emoji:'🚘', badge:'',
-    highlights:['First Owner','UP-65 Registration','Alloy Wheels','Electric Tailgate','Large Boot Space'],
-    desc:'First owner Ford Fiesta Classic diesel with UP-65 registration. Features alloy wheels, electric tailgate, and a large boot space — rare features for this segment. Well maintained and solid build quality.'
+    id: 5, brand: 'Maruti Suzuki', name: 'Vitara Brezza VDi', year: 2018, km: 68000,
+    fuel: 'Diesel', trans: 'Manual', price: 535000, color: 'Not Specified', seats: 5,
+    engine: '1.3L DDiS', power: '89 bhp', emoji: '🚙', badge: '',
+    highlights: ['Diesel', 'Well Maintained', 'Owner Not Mentioned', 'Popular SUV', 'Great Highway Car'],
+    desc: '2018 Maruti Suzuki Vitara Brezza VDi, diesel, 68,000 km driven. Well maintained SUV listed at Rs 5,35,000.'
   },
   {
-    id:6, brand:'Maruti Suzuki', name:'Alto K10 VXI', year:2012, km:0,
-    fuel:'Petrol', trans:'Manual', price:165000, color:'Not Specified', seats:5,
-    engine:'1.0L K10B', power:'67 bhp', emoji:'🚗', badge:'',
-    highlights:['First Owner','1000cc Engine','Brand New Tyres','Excellent AC','Low Maintenance'],
-    desc:'Oct 2012 Alto K10 VXI with first owner history. Equipped with a reliable 1000cc engine, brand new tyres, and excellent working AC. Perfect entry-level car for first-time buyers or for city use.'
+    id: 6, brand: 'Hyundai', name: 'Eon', year: 2016, km: 59000,
+    fuel: 'Petrol', trans: 'Manual', price: 220000, color: 'Not Specified', seats: 5,
+    engine: '0.8L', power: '56 bhp', emoji: '🚗', badge: '',
+    highlights: ['1st Owner', 'Petrol', '59,000 km Driven', 'Budget Friendly', 'City Use'],
+    desc: '2016 Hyundai Eon, first owner, petrol, 59,000 km driven. Affordable hatchback priced at Rs 2,20,000.'
   },
   {
-    id:7, brand:'Maruti Suzuki', name:'Baleno', year:2019, km:51000,
-    fuel:'Petrol', trans:'Manual', price:465000, color:'Not Specified', seats:5,
-    engine:'1.2L Dualjet', power:'90 bhp', emoji:'🚗', badge:'featured',
-    highlights:['First Owner','Premium Hatchback','Touchscreen Infotainment','ABS + EBD','Stylish Design'],
-    desc:'First owner 2019 Baleno petrol with 51,000 km. One of the most popular premium hatchbacks in India. Smooth engine, great fuel economy, and stylish interiors. Well maintained throughout.'
+    id: 7, brand: 'Maruti Suzuki', name: 'Baleno Delta', year: 2020, km: 81000,
+    fuel: 'Petrol', trans: 'Manual', price: 470000, color: 'Not Specified', seats: 5,
+    engine: '1.2L', power: '83 bhp', emoji: '🚗', badge: '',
+    highlights: ['1st Owner', 'Well Maintained', 'Delta Variant', 'Petrol', 'Spacious Premium Hatchback'],
+    desc: '2020 Maruti Suzuki Baleno Delta, first owner, petrol, 81,000 km driven. Well maintained and priced at Rs 4,70,000.'
   },
   {
-    id:8, brand:'Mahindra', name:'Bolero', year:2014, km:99000,
-    fuel:'Diesel', trans:'Manual', price:380000, color:'Not Specified', seats:7,
-    engine:'2.5L mHawk', power:'63 bhp', emoji:'🚐', badge:'',
-    highlights:['7 Seater','80-90% Tyre Tread Left','Rugged Build','High Ground Clearance','Diesel Economy'],
-    desc:'2014 Mahindra Bolero diesel 7-seater with 80-90% tyre life remaining. The most trusted workhorse for families and rough terrain. Rugged build, high ground clearance, and reliable diesel engine. Great value for the price.'
-  },
-  {
-    id:9, brand:'Maruti Suzuki', name:'Celerio VXI (CNG)', year:2023, km:77000,
-    fuel:'Petrol + CNG', trans:'Manual', price:415000, color:'Not Specified', seats:5,
-    engine:'1.0L K10C', power:'67 bhp', emoji:'🚗', badge:'new',
-    highlights:['First Owner','Company Fitted CNG','Original Sealed Condition','New Car Feel & Smell','Promotional Price'],
-    desc:'First owner 2023 Celerio VXI with company-fitted CNG at a discounted promotional price. Retains its original sealed condition and even the new car smell. Excellent fuel economy on CNG. One of the best value buys in stock right now.'
-  },
-  {
-    id:10, brand:'Tata', name:'Zest XM', year:2017, km:65000,
-    fuel:'Diesel', trans:'Manual', price:250000, color:'Not Specified', seats:5,
-    engine:'1.3L Quadrajet', power:'89 bhp', emoji:'🚙', badge:'',
-    highlights:['Second Owner','22-25 kmpl Mileage','Spacious Cabin','Discounted from ₹2.65L','Diesel Economy'],
-    desc:'2017 Tata Zest XM diesel, second owner, delivering 22-25 kmpl mileage. Price reduced from ₹2.65 Lakh as a promotional offer. Spacious cabin, reliable diesel engine, and great running cost. Smart budget sedan pick.'
-  },
-  {
-    id:11, brand:'Maruti Suzuki', name:'XL6 Zeta', year:2020, km:0,
-    fuel:'Petrol', trans:'Manual', price:725000, color:'Magma Grey', seats:6,
-    engine:'1.5L K15B', power:'103 bhp', emoji:'🚐', badge:'featured',
-    highlights:['UP-60 Registration','Push-Button Start','Cruise Control','All-LED Headlamps','15" Company Alloys','6-Seater Captain Seats'],
-    desc:'Premium 2020 Maruti XL6 Zeta in Magma Grey, registered directly in dealership firm name (UP-60). Loaded with push-button start, cruise control, all-LED headlamps, 15-inch company alloy wheels, and 6-seater captain seats. A rare find at this price.'
-  },
-  {
-    id:12, brand:'Hyundai', name:'i20 Sportz', year:2017, km:37000,
-    fuel:'Petrol', trans:'Manual', price:399000, color:'Not Specified', seats:5,
-    engine:'1.2L Kappa2', power:'82 bhp', emoji:'🏎️', badge:'',
-    highlights:['Official Service Record','Roof Rails','Diamond-Cut Alloy Wheels','Chrome Door Handles','Silent Engine','Sonbhadra Registration'],
-    desc:'Nov 2017 Hyundai i20 Sportz petrol with official service record and just 37,000 km driven. Top model featuring roof rails, diamond-cut alloys, and chrome door handles. Engine is remarkably silent and smooth. Sonbhadra registration.'
-  },
-  {
-    id:13, brand:'Tata', name:'Nexon', year:2018, km:79000,
-    fuel:'Diesel', trans:'Manual', price:450000, color:'Not Specified', seats:5,
-    engine:'1.5L Revotorq', power:'108 bhp', emoji:'🚙', badge:'',
-    highlights:['Mirzapur (AD) Registration','5-Star Safety Rating','Turbocharged Diesel','ABS + EBD','Stylish SUV Design'],
-    desc:'2018 Tata Nexon diesel with Mirzapur (AD) registration and 79,000 km. India\'s first 5-star safety rated SUV. Turbocharged diesel engine delivers punchy performance and good mileage. Great SUV value at this price point.'
-  },
-  {
-    id:14, brand:'Hyundai', name:'Eon Magna Plus', year:2018, km:82000,
-    fuel:'Petrol', trans:'Manual', price:235000, color:'Not Specified', seats:5,
-    engine:'0.8L Epsilon', power:'55 bhp', emoji:'🚗', badge:'',
-    highlights:['Varanasi Local Registration','Low Maintenance','Fuel Efficient','Easy to Park','Ideal City Car'],
-    desc:'2018 Hyundai Eon Magna Plus with Varanasi local registration. The perfect compact city car — easy to park, fuel efficient, and extremely low maintenance cost. Ideal for first-time buyers or as a second family car.'
-  },
-  {
-    id:15, brand:'Maruti Suzuki', name:'Dzire', year:2020, km:46000,
-    fuel:'Petrol', trans:'Manual', price:500000, color:'Not Specified', seats:5,
-    engine:'1.2L Dualjet', power:'89 bhp', emoji:'🚗', badge:'featured',
-    highlights:['First Owner','April 2020','46,000 km','Booked — May Be Available','Call to Confirm Availability'],
-    desc:'April 2020 Maruti Dzire petrol, first owner with 46,000 km. This car was actively booked at ₹5 Lakh but may become available if the buyer\'s financing doesn\'t come through. Call us immediately to express interest — don\'t miss it!'
+    id: 8, brand: 'Hyundai', name: 'Grand i10 Nios Sportz', year: 2021, km: 71000,
+    fuel: 'Petrol + CNG', trans: 'Manual', price: 485000, color: 'Not Specified', seats: 5,
+    engine: '1.2L Kappa', power: '82 bhp', emoji: '🚗', badge: 'featured',
+    highlights: ['1st Owner', 'Sportz Variant', 'Petrol + CNG', 'Very Well Maintained', 'Top Pick'],
+    desc: '2021 Hyundai Grand i10 Nios Sportz, first owner, petrol + CNG, 71,000 km driven. Very well maintained and set as featured vehicle.'
   },
 ];
 
@@ -908,7 +868,7 @@ function renderCars(list) {
         <div class="car-brand">${car.brand}</div>
         <div class="car-name">${car.name} (${car.year})</div>
         <div class="car-specs">
-          <span class="spec-item"><span class="spec-icon">📍</span>${(car.km/1000).toFixed(0)}k km</span>
+          <span class="spec-item"><span class="spec-icon">📍</span>${formatKm(car.km)}</span>
           <span class="spec-item"><span class="spec-icon">⛽</span>${car.fuel}</span>
           <span class="spec-item"><span class="spec-icon">🔧</span>${car.trans}</span>
           <span class="spec-item"><span class="spec-icon">👥</span>${car.seats} Seats</span>
@@ -927,6 +887,11 @@ function renderCars(list) {
 function formatPrice(p) {
   if (p >= 100000) return (p/100000).toFixed(2).replace(/\.?0+$/, '') + ' L';
   return p.toLocaleString('en-IN');
+}
+
+function formatKm(km) {
+  if (!km || km <= 0) return 'NA';
+  return `${(km / 1000).toFixed(0)}k km`;
 }
 
 function calcMonthly(price, rate=9, months=60) {
@@ -961,6 +926,16 @@ function applyFilters() {
   document.getElementById('inventory').scrollIntoView({behavior:'smooth'});
 }
 
+function resetFilters() {
+  document.getElementById('filterBrand').value = '';
+  document.getElementById('filterFuel').value = '';
+  document.getElementById('filterBudget').value = '';
+  document.getElementById('filterTrans').value = '';
+  document.getElementById('filterYear').value = '';
+  filteredCars = [...cars];
+  renderCars(filteredCars);
+}
+
 // ─── SORT ──────────────────────────────────────────────────────────────────────
 function sortCars(type, btn) {
   document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
@@ -969,7 +944,7 @@ function sortCars(type, btn) {
   if (type === 'price-low') sorted.sort((a,b) => a.price - b.price);
   else if (type === 'price-high') sorted.sort((a,b) => b.price - a.price);
   else if (type === 'newest') sorted.sort((a,b) => b.year - a.year || a.km - b.km);
-  else if (type === 'km') sorted.sort((a,b) => a.km - b.km);
+  else if (type === 'km') sorted.sort((a,b) => (a.km || Number.MAX_SAFE_INTEGER) - (b.km || Number.MAX_SAFE_INTEGER));
   renderCars(sorted);
 }
 
@@ -994,7 +969,7 @@ function openModal(id) {
       </div>
     </div>
     <div class="specs-grid">
-      <div class="spec-card"><div class="spec-label">Kilometres</div><div class="spec-value">📍 ${car.km.toLocaleString('en-IN')} km</div></div>
+      <div class="spec-card"><div class="spec-label">Kilometres</div><div class="spec-value">📍 ${car.km > 0 ? car.km.toLocaleString('en-IN') + ' km' : 'Not Disclosed'}</div></div>
       <div class="spec-card"><div class="spec-label">Fuel Type</div><div class="spec-value">⛽ ${car.fuel}</div></div>
       <div class="spec-card"><div class="spec-label">Transmission</div><div class="spec-value">🔧 ${car.trans}</div></div>
       <div class="spec-card"><div class="spec-label">Year</div><div class="spec-value">📅 ${car.year}</div></div>
@@ -1051,7 +1026,21 @@ function calcEMI() {
 function submitForm() {
   const name = document.getElementById('formName').value.trim();
   const phone = document.getElementById('formPhone').value.trim();
-  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  const email = document.getElementById('formEmail').value.trim();
+  const interest = document.getElementById('formInterest').value;
+  const message = document.getElementById('formMessage').value.trim();
+  const errorBox = document.getElementById('formError');
+  const phoneDigits = phone.replace(/\D/g, '');
+
+  errorBox.classList.remove('show');
+  if (!name || phoneDigits.length !== 10) {
+    errorBox.classList.add('show');
+    return;
+  }
+
+  const whatsappText = `New enquiry from website:%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phoneDigits)}%0AEmail: ${encodeURIComponent(email || 'Not provided')}%0AInterest: ${encodeURIComponent(interest)}%0AMessage: ${encodeURIComponent(message || 'No message')}`;
+  window.open(`https://wa.me/916386765292?text=${whatsappText}`, '_blank');
+
   document.getElementById('formToast').classList.add('show');
   document.getElementById('formName').value = '';
   document.getElementById('formPhone').value = '';
@@ -1062,8 +1051,33 @@ function submitForm() {
 
 // ─── NAV ──────────────────────────────────────────────────────────────────────
 function toggleNav() {
-  document.getElementById('navLinks').classList.toggle('open');
-  document.getElementById('navCta').classList.toggle('open');
+  const navLinks = document.getElementById('navLinks');
+  const navCta = document.getElementById('navCta');
+  const navToggle = document.getElementById('navToggle');
+  navLinks.classList.toggle('open');
+  navCta.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', String(navLinks.classList.contains('open')));
+}
+
+function updateOpenStatus() {
+  const badge = document.getElementById('hoursBadge');
+  if (!badge) return;
+
+  const now = new Date();
+  const indiaNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+  const day = indiaNow.getDay();
+  const hour = indiaNow.getHours();
+  const minute = indiaNow.getMinutes();
+  const totalMinutes = hour * 60 + minute;
+
+  const weekdayOpen = day >= 1 && day <= 6 && totalMinutes >= 9 * 60 && totalMinutes < 19 * 60;
+  const sundayOpen = day === 0 && totalMinutes >= 10 * 60 && totalMinutes < 16 * 60;
+  const isOpen = weekdayOpen || sundayOpen;
+
+  badge.textContent = isOpen ? '● Open Now' : '● Closed Now';
+  badge.style.color = isOpen ? '#2ecc71' : '#ff8f87';
+  badge.style.borderColor = isOpen ? 'rgba(46,204,113,0.2)' : 'rgba(192,57,43,0.35)';
+  badge.style.background = isOpen ? 'rgba(46,204,113,0.1)' : 'rgba(192,57,43,0.12)';
 }
 
 window.addEventListener('scroll', () => {
@@ -1074,8 +1088,18 @@ window.addEventListener('scroll', () => {
 });
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
-renderCars(cars);
+filteredCars = [...cars];
+renderCars(filteredCars);
 calcEMI();
+updateOpenStatus();
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 700 && document.getElementById('navLinks').classList.contains('open')) {
+      toggleNav();
+    }
+  });
+});
 </script>
 </body>
 </html>
