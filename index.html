@@ -375,6 +375,17 @@
     .modal-price-group { text-align: left; }
     .modal-body { padding: 0 1rem 1.5rem; }
   }
+
+  /* DELIVERY GALLERY */
+  .deliveries-section { padding: 3rem 4%; }
+  .deliveries-inner { max-width: 1300px; margin: 0 auto; }
+  .deliveries-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .deliveries-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .delivery-card { background: var(--dark3); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; overflow: hidden; position: relative; padding: 0.5rem; display: flex; align-items: center; justify-content: center; height: 160px; }
+  .delivery-card img { width: 100%; height: 100%; object-fit: cover; object-position: center; border-radius: 8px; }
+  .delivery-upload { display: flex; gap: 0.5rem; align-items: center; }
+  .delivery-upload input[type="file"] { display: none; }
+  .export-btn { font-size: 0.85rem; padding: 0.55rem 0.9rem; }
 </style>
 </head>
 <body>
@@ -613,6 +624,23 @@
       <div class="testimonial-card"><div class="stars">★★★★★</div><p class="testimonial-text">Home delivery was a great surprise. The car was delivered to my house fully sanitized with a bow on it! Great touch. Very professional team.</p><div class="testimonial-author"><div class="author-avatar">NV</div><div><div class="author-name">Neha Verma</div><div class="author-car">Kia Seltos 2022</div></div></div></div>
       <div class="testimonial-card"><div class="stars">★★★★★</div><p class="testimonial-text">As a first-time buyer I was nervous, but the team walked me through everything patiently. Got a great Wagon R at a price I could afford. Zero hidden costs.</p><div class="testimonial-author"><div class="author-avatar">VA</div><div><div class="author-name">Vikram Arora</div><div class="author-car">Maruti Wagon R 2021</div></div></div></div>
     </div>
+  </div>
+</section>
+ 
+<!-- DELIVERY GALLERY -->
+<section class="section deliveries-section" id="deliveries">
+  <div class="section-inner deliveries-inner">
+    <div class="section-header deliveries-header">
+      <div>
+        <span class="section-label">Customer Deliveries</span>
+        <h2 class="section-title">Delivery Gallery</h2>
+        <p class="section-desc">Delivery moments from our customers — proof of trust and happy deliveries.</p>
+      </div>
+      <div class="delivery-upload">
+        <button class="btn-primary export-btn" id="exportDeliveries"></button>
+      </div>
+    </div>
+    <div class="deliveries-grid" id="deliveriesGrid"></div>
   </div>
 </section>
 
@@ -1188,6 +1216,78 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     }
   });
 });
+
+// ─── DELIVERY GALLERY ───────────────────────────────────────────────────────
+function addDeliveryImg(src) {
+  const grid = document.getElementById('deliveriesGrid');
+  if (!grid) return;
+  const card = document.createElement('div'); card.className = 'delivery-card';
+  const img = document.createElement('img'); img.src = src; img.alt = 'Delivery photo';
+  img.onerror = () => { if (card.parentNode) card.remove(); };
+  card.appendChild(img);
+  grid.appendChild(card);
+}
+
+function probeDeliveryFiles() {
+  const exts = ['jpg','jpeg','png','webp'];
+  // try delivery1..delivery24 with common extensions
+  for (let i = 1; i <= 24; i++) {
+    for (let ext of exts) {
+      const src = `delivery/delivery${i}.${ext}`;
+      const img = new Image();
+      img.onload = (function(s){ return function(){ addDeliveryImg(s); }; })(src);
+      img.onerror = function(){};
+      img.src = src;
+    }
+  }
+}
+
+
+document.getElementById('exportDeliveries')?.addEventListener('click', function () {
+  const imgs = Array.from(document.querySelectorAll('#deliveriesGrid img')).map(i => i.src);
+  const blob = new Blob([JSON.stringify(imgs, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'deliveries-manifest.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+});
+
+// add external delivery images provided by user
+const deliveryExternal = [
+  'https://lh3.googleusercontent.com/gps-cs-s/APNQkAGrzRSS2UhEFiJR8tVmjkBq_wMf45JMRrFK7L551UKaS5y4Kg54QsEo71bj91efNo4fAD6A16PKwwVQxr7z0DuWwJRrVY7Pej8QJ8uE-2-6TxC8ONjaouE7sNtF2cs-q0zllIxIMXKAxg66=s1360-w1360-h1020-rw',
+  'https://lh3.googleusercontent.com/gps-cs-s/APNQkAH_rmzWTIfeUXYQzheMxstJTkAchjb-qCrK8y5tY0popEq22RybCK1n5ONT4aqenLjwn5bCtr77iKHFYMQrjkqhGI51HP7EuJW6cLdiImcE4xS8vlpauwcEWUDxIxbkf8MT3Ev6UMUprOJS=s1360-w1360-h1020-rw',
+  'https://lh3.googleusercontent.com/gps-cs-s/APNQkAGROHNqcL-twglzll9oTV3blFB2tZzbJt-fwMUCRUJfkbWjGudFF0S4NYIbJy00bXFGW-CtyNihANx5RYdL8tjgMWjViFkAA8gq_1yEvoHSeTtzILIPP8rB3FXRBn3uxTe753cxojk2Yu-X=s1360-w1360-h1020-rw',
+  'https://lh3.googleusercontent.com/gps-cs-s/APNQkAEbKNoy-1nQyhc9gmFQ8_3OGANfLXA450uVK9PrNV88nhXtT0zU0feSSpO_CcCy5Hyc4auB9a6bpxXE7EDBXhM7SQW5lk4gnYCd_oRjjOAE9ItudWVekeXtG-nvVXChzjYEd1sYcH8n3Ec=s1360-w1360-h1020-rw',
+  'https://lh3.googleusercontent.com/gps-cs-s/APNQkAFsqH04RgDiKVMcB-0P2bqP51wuBL5weVxX7Dvpw6y3so134u_gG7mC4zxLF8Di4Fw4H61VIlozwdTysnj--h2x0XDOkmHG-Gr9qwFUzqimQvZqj70J5pw2C6pGR8ssu0tP6f7FZzLRqyY=s1360-w1360-h1020-rw',
+  'https://lh3.googleusercontent.com/gps-cs-s/APNQkAGAkUkkiwGlKYRNCZ2_2hNBEv8HZ5t9AagF5vwmJaEZuNWwGo-MGymd3lCFj-VO2Fs8CFJJsgdKTxi_xZ4drjkRA4iEmy1To7EQHOe5S5CGxEW5BF6pidb4mQvvI-pBm50lAxlAHjfMGJk2=s1360-w1360-h1020-rw'
+  , 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAHYSQGFAej2PbUDz6ThHoiPo1ys0mH3JKWXXnP2VtPe3SmDcL9umRCJMPI_8RIR-IPqmPznKyLvVqzv38bZKJUuja_WJRMgroCpznXCi1smzYtprUq3SbFvNApsE4At-WNTgdRdRJj_L2k=s1360-w1360-h1020-rw'
+];
+
+// show external images first
+deliveryExternal.forEach(src => addDeliveryImg(src));
+
+// run probe on init for local files
+probeDeliveryFiles();
+
+// add two placeholder cards to encourage customers: "You could be next"
+function addPlaceholderCard() {
+  const grid = document.getElementById('deliveriesGrid');
+  if (!grid) return;
+  const card = document.createElement('div');
+  card.className = 'delivery-card';
+  card.style.background = 'linear-gradient(135deg,#1a1a1a,#232323)';
+  card.style.display = 'flex';
+  card.style.flexDirection = 'column';
+  card.style.alignItems = 'center';
+  card.style.justifyContent = 'center';
+  card.style.color = 'var(--text)';
+  card.innerHTML = `<div style="text-align:center;padding:8px;width:100%;">
+    <div style="font-size:1rem;color:var(--gold);font-weight:700;margin-bottom:6px;">You could be next</div>
+    <div style="font-size:0.86rem;color:var(--text-muted);">Book Your car Now !!</div>
+    <a href="#contact" class="btn-outline" style="margin-top:8px;display:inline-block;padding:6px 10px;font-size:0.82rem;">Contact Us</a>
+  </div>`;
+  grid.appendChild(card);
+}
+
+addPlaceholderCard();
 </script>
 </body>
 </html>
